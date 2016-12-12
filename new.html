@@ -22,12 +22,11 @@
 
 function createStart() {
 
-  var web3 = new Web3();
-
   document.getElementById('createLabel').innerHTML = 'Pending';
   document.getElementById('contractAddress').value = '';
 
   var payment = web3.toWei(document.getElementById('paymentEther').value, 'ether');
+  var address = web.eth.accounts[0];
 
   create(document.getElementById('yourAddress').value, document.getElementById('participantNumber').value, payment, createCallback);
 }

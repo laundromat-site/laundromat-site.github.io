@@ -39,8 +39,6 @@
 
 function statusCallback(data) {
 
-  var web3 = new Web3();
-
   if(data.result != 'ok') {
     document.getElementById('queryStatusLabel').innerHTML = 'Error: ' + data.error;
     return;
