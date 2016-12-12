@@ -22,17 +22,20 @@
 
 function withdrawStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  withdraw(document.getElementById('address3').value,document.getElementById('myaddress2').value, document.getElementById('privatekey2').value, withdrawCallback);
+  var address = web3.eth.accounts[0];
+  withdraw(document.getElementById('address3').value, address, document.getElementById('privatekey2').value, withdrawCallback);
 }
 
 function withdrawStepStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  withdrawStep(document.getElementById('address3').value,document.getElementById('myaddress2').value, withdrawStepCallback);
+  var address = web3.eth.accounts[0];
+  withdrawStep(document.getElementById('address3').value, address, withdrawStepCallback);
 }
 
 function withdrawFinalStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  withdrawFinal(document.getElementById('address3').value,document.getElementById('myaddress2').value, withdrawFinalCallback);
+  var address = web3.eth.accounts[0];
+  withdrawFinal(document.getElementById('address3').value, address, withdrawFinalCallback);
 }
 
 function withdrawCallback(data) {
@@ -114,21 +117,6 @@ function withdrawFinalCallback(data) {
 		    <form>
 				    <div class="input-group">
               <input type="text" class="form-control" style="width: 911px !important;" name="address3" id="address3">
-            </div>
-		    </form>
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">My Address</h3>
-      </div>
-      
-      <div class="panel-body">
-        <p>Enter your Ethereum address.</p>
-		    <form>
-				    <div class="input-group">
-              <input type="text" class="form-control" style="width: 911px !important;" name="myaddress2" id="myaddress2">
             </div>
 		    </form>
       </div>

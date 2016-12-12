@@ -26,9 +26,9 @@ function createStart() {
   document.getElementById('contractAddress').value = '';
 
   var payment = web3.toWei(document.getElementById('paymentEther').value, 'ether');
-  var address = web.eth.accounts[0];
+  var address = web3.eth.accounts[0];
 
-  create(document.getElementById('yourAddress').value, document.getElementById('participantNumber').value, payment, createCallback);
+  create(address, document.getElementById('participantNumber').value, payment, createCallback);
 }
 
 function createCallback(data) {
@@ -82,20 +82,6 @@ function createCallback(data) {
         <h1>New</h1>
     </div>  
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Your Address</h3>
-      </div>
-      <div class="panel-body">
-        <p>Enter your Ethereum address.</p>
-		    <form>
-				    <div class="input-group">
-              <input type="text" class="form-control" style="width: 911px !important;" id="yourAddress" name="yourAddress">
-            </div>
-		    </form>
-      </div>
-    </div>
-    
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Participants</h3>

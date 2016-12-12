@@ -55,31 +55,11 @@ function generatePrivate() {
 
   var key = random_key();
   document.getElementById('privateResult').value = key.toString();
-
-  var customWeb3 = null;
-  if(window.web3){
-    customWeb3 = new Web3(window.web3.currentProvider);
-    if(typeof mist !== 'undefined') {
-      console.log("Mist");
-    }
-    else if(
-      window.web3.currentProvider &&
-      window.web3.currentProvider.constructor &&
-      window.web3.currentProvider.constructor.name == "MetamaskInpageProvider"
-    ){
-      // Is metamask
-      console.log("Metamask");
-    }
-    else{
-      // Is another wallet implementation
-      console.log("No provider");
-    }
-  }
 }
 
 function depositStart() {
   document.getElementById('depositLabel').innerHTML = 'Pending';
-  deposit(document.getElementById('address').value,document.getElementById('myaddress').value, document.getElementById('privateResult').value, depositCallback);
+  deposit(document.getElementById('address').value, document.getElementById('myaddress').value, document.getElementById('privateResult').value, depositCallback);
 }
 
 function depositCallback(data) {

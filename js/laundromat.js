@@ -22,41 +22,43 @@ function getStatus(address, callback) {
 
   try
   {
-    var code = web3.eth.getCode(address);
-    if(!code || code.length == 0) {
-      callback({result: 'error', error: 'Cannot validate contract code'});
+    var code = web3.eth.getCode(address, function(err, code) {
+      
+      if(!code || code.length == 0) {
+        callback({result: 'error', error: 'Cannot validate contract code'});
+        return;
+      }
+
+      var contractVersion = 0;
+      if(code.endsWith(LAUNDROMAT_RUNTIME_BYTECODE)) {
+        contractVersion = 1;
+      }
+
+      if(contractVersion != 1) {
+        callback({result: 'error', error: 'Invalid contract code'});
+        return;
+      }
+
+      var laundromatContract = web3.eth.contract(laundromatContractAbi);
+      var laundromatContractInstance = laundromatContract.at(address);
+
+      var participants = parseInt(laundromatContractInstance.participants().toFixed());
+      var gotParticipants = parseInt(laundromatContractInstance.gotParticipants().toFixed());
+      var payment = laundromatContractInstance.payment().toFixed();
+      var pubkeys = [];
+
+      for(var i = 0; i < gotParticipants; i++) {
+
+        var pubkey = [
+          laundromatContractInstance.pubkeys1(i).toFixed(),
+          laundromatContractInstance.pubkeys2(i).toFixed()];
+
+        pubkeys.push(pubkey);
+      }
+
+      callback({result: 'ok', participants: participants, gotParticipants: gotParticipants, payment: payment, pubkeys: pubkeys, address: address});
       return;
-    }
-
-    var contractVersion = 0;
-    if(code.endsWith(LAUNDROMAT_RUNTIME_BYTECODE)) {
-      contractVersion = 1;
-    }
-
-    if(contractVersion != 1) {
-      callback({result: 'error', error: 'Invalid contract code'});
-      return;
-    }
-
-    var laundromatContract = web3.eth.contract(laundromatContractAbi);
-    var laundromatContractInstance = laundromatContract.at(address);
-
-    var participants = parseInt(laundromatContractInstance.participants().toFixed());
-    var gotParticipants = parseInt(laundromatContractInstance.gotParticipants().toFixed());
-    var payment = laundromatContractInstance.payment().toFixed();
-    var pubkeys = [];
-
-    for(var i = 0; i < gotParticipants; i++) {
-
-      var pubkey = [
-        laundromatContractInstance.pubkeys1(i).toFixed(),
-        laundromatContractInstance.pubkeys2(i).toFixed()];
-
-      pubkeys.push(pubkey);
-    }
-
-    callback({result: 'ok', participants: participants, gotParticipants: gotParticipants, payment: payment, pubkeys: pubkeys, address: address});
-    return;
+    });
   }
   catch (err) {
     console.log("error: " + err.message);
