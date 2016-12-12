@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+  <title>Laundromat</title>
+  
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- Superhero Bootstrap theme -->
+<link href="css/superhero.bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<script>
+
+function withdrawStart() {
+  document.getElementById('withdrawLabel').innerHTML = 'Pending';
+  withdraw(document.getElementById('address3').value,document.getElementById('myaddress2').value, document.getElementById('privatekey2').value, withdrawCallback);
+}
+
+function withdrawStepStart() {
+  document.getElementById('withdrawLabel').innerHTML = 'Pending';
+  withdrawStep(document.getElementById('address3').value,document.getElementById('myaddress2').value, withdrawStepCallback);
+}
+
+function withdrawFinalStart() {
+  document.getElementById('withdrawLabel').innerHTML = 'Pending';
+  withdrawFinal(document.getElementById('address3').value,document.getElementById('myaddress2').value, withdrawFinalCallback);
+}
+
+function withdrawCallback(data) {
+
+  if(data.result == 'ok') {
+     document.getElementById('withdrawLabel').innerHTML = 'Success';
+     return;
+  }
+
+  document.getElementById('withdrawLabel').innerHTML = 'Error: ' + data.error;
+}
+
+function withdrawStepCallback(data) {
+
+  if(data.result == 'ok') {
+     document.getElementById('withdrawLabel').innerHTML = 'Success';
+     return;
+  }
+
+  document.getElementById('withdrawLabel').innerHTML = 'Error: ' + data.error;
+}
+
+function withdrawFinalCallback(data) {
+
+  if(data.result == 'ok') {
+     document.getElementById('withdrawLabel').innerHTML = 'Success';
+     return;
+  }
+
+  document.getElementById('withdrawLabel').innerHTML = 'Error: ' + data.error;
+}
+</script>  
+
+
+<body>
+	
+	  <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Laundromat</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Main</a></li>
+            <li><a href="new.html">New</a></li>
+            <li class="active"><a href="#">Withdraw</a></li>
+            <li><a href="help.html">Help</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+  <div class=" container">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <h1>Withdraw</h1>
+      <p>Withdraw your Ether from a completed mixing contract</p>
+    </div>
+
+    <div class="page-header">
+        <h1>Withdraw</h1>
+    </div>  
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Contract</h3>
+      </div>
+      
+      <div class="panel-body">
+        <p>Enter the address of the contract you want to withdraw from.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 911px !important;" name="address3" id="address3">
+            </div>
+		    </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">My Address</h3>
+      </div>
+      
+      <div class="panel-body">
+        <p>Enter your Ethereum address.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 911px !important;" name="myaddress2" id="myaddress2">
+            </div>
+		    </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Private Key</h3>
+      </div>
+      
+      <div class="panel-body">
+        <p>Enter the private key you generated when you joined this contract.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 911px !important;" name="privatekey2" id="privatekey2">
+            </div>
+		    </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Withdraw</h3>
+      </div>
+      
+      <div class="panel-body">
+        <p>See the Help section for an explanation of the Withdrawal buttons.</p>
+			  <div id="withdrawLabel" class="text-warning"></div>
+			    <form>
+					    <div class="input-group">
+	                <button class="btn btn-success" type="button" name="Withdraw" value="Withdraw" onclick="withdrawStart()">Withdraw</button>&nbsp;
+	                <button class="btn btn-success" type="button" name="WithdrawStep" value="WithdrawStep" onclick="withdrawStepStart()">Withdraw Step</button>&nbsp;
+	                <button class="btn btn-success" type="button" name="WithdrawFinal" value="WithdrawFinal" onclick="withdrawFinalStart()">Withdraw Finalize</button>
+	            </div>
+			    </form>
+    	</div>
+
+  </div>
+  <!--main content end-->
+
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="js/web3.js"></script>
+  <script type="text/javascript" src="js/jsbn.js"></script>
+  <script type="text/javascript" src="js/signer.js"></script>
+  <script type="text/javascript" src="js/laundromat.js"></script>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="js/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- End Bootstrap -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+  <title>Laundromat</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<!-- Superhero Bootstrap theme -->
+<link href="css/superhero.bootstrap.min.css" rel="stylesheet">
+  
+</head>
+
+<script>
+
+function createStart() {
+
+  var web3 = new Web3();
+
+  document.getElementById('createLabel').innerHTML = 'Pending';
+  document.getElementById('contractAddress').value = '';
+
+  var payment = web3.toWei(document.getElementById('paymentEther').value, 'ether');
+
+  create(document.getElementById('yourAddress').value, document.getElementById('participantNumber').value, payment, createCallback);
+}
+
+function createCallback(data) {
+
+  if(data.result == 'ok') {
+     document.getElementById('createLabel').innerHTML = 'Success';
+     document.getElementById('contractAddress').value = data.address;
+     return;
+  }
+
+  document.getElementById('createLabel').innerHTML = 'Error: ' + data.error;
+}
+
+</script>  
+
+
+<body>
+	
+	  <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Laundromat</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Main</a></li>
+            <li class="active"><a href="#">New</a></li>
+            <li><a href="withdraw.html">Withdraw</a></li>
+            <li><a href="help.html">Help</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+
+  <div class=" container">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <h1>New Mixing Contract</h1>
+      <p>Create a mixing contract of your own</p>
+    </div>
+    
+    <div class="page-header">
+        <h1>New</h1>
+    </div>  
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Your Address</h3>
+      </div>
+      <div class="panel-body">
+        <p>Enter your Ethereum address.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 911px !important;" id="yourAddress" name="yourAddress">
+            </div>
+		    </form>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Participants</h3>
+      </div>
+      <div class="panel-body">
+        <p>Enter the number of participants you want for this contract. The higher the number of participants, the more anonymity your Ether will have.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" id="participantNumber" style="width: 75px !important;" name="participantNumber">
+            </div>
+		    </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Payment</h3>
+      </div>
+      <div class="panel-body">
+        <p>Enter the amount of Ether that participants will have to deposit to join your contract.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 75px !important;" id="paymentEther" name="paymentEther">
+            </div>
+		    </form>
+      </div>
+      <div class="panel-footer">
+	      <p>Click "Create Contract" to create your new mixing contract. Be sure to write down your contract address. Other users will need the contract address in order to join your contract.</p>
+	      <div id="createLabel" class="text-warning"></div>
+		    <form>
+				    <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-success" type="button" name="join" value="join" onclick="createStart()">Create Contract</button>
+              </span>
+              <input type="text" class="form-control" id="contractAddress" name="contractAddress">
+            </div>
+		    </form>
+      </div>
+    </div>
+
+  </div>
+  <!--main content end-->
+
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="js/web3.js"></script>
+  <script type="text/javascript" src="js/jsbn.js"></script>
+  <script type="text/javascript" src="js/signer.js"></script>
+  <script type="text/javascript" src="js/laundromat.js"></script>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="js/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- End Bootstrap -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</body>
+</html>
