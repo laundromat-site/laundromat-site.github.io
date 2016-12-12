@@ -20,8 +20,6 @@ var LAUNDROMAT_RUNTIME_BYTECODE = '606060405236156100775760e060020a600035046307f
 
 function getStatus(address, callback) {
 
-  var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-
   try
   {
     var code = web3.eth.getCode(address);
@@ -68,8 +66,6 @@ function getStatus(address, callback) {
 }
 
 function create(myaddress, participants, payment, callback) {
-
-  var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
   var laundromatContract = web3.eth.contract(laundromatContractAbi);
 
@@ -130,8 +126,6 @@ function deposit(address, myaddress, privateKey, callback) {
     var pubkey = getPublicKey(privateKey);
 
     //start deposit
-    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-
     var laundromatContract = web3.eth.contract(laundromatContractAbi);
     var laundromatContractInstance = laundromatContract.at(address);
 
@@ -185,7 +179,6 @@ function withdraw(address, myaddress, privateKey, callback) {
     console.log('I: ' + [result.ix, result.iy].toString());
 
     //start withdraw
-    var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
     var laundromatContract = web3.eth.contract(laundromatContractAbi);
     var laundromatContractInstance = laundromatContract.at(address);
 
@@ -217,7 +210,6 @@ function withdraw(address, myaddress, privateKey, callback) {
 function withdrawStep(address, myaddress, callback) {
 
   //start withdraw
-  var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
   var laundromatContract = web3.eth.contract(laundromatContractAbi);
   var laundromatContractInstance = laundromatContract.at(address);
 
@@ -238,7 +230,6 @@ function withdrawStep(address, myaddress, callback) {
 function withdrawFinal(address, myaddress, callback) {
 
   //start withdraw
-  var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
   var laundromatContract = web3.eth.contract(laundromatContractAbi);
   var laundromatContractInstance = laundromatContract.at(address);
 
