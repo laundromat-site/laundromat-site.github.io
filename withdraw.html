@@ -20,22 +20,73 @@
 
 <script>
 
+isGeth = false;
+
+function init() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+    // Use Mist/MetaMask's provider
+    web3 = new Web3(web3.currentProvider);
+  } else {
+    console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    isGeth = true;
+  }
+
+  if(isGeth) {
+
+    //hide unnecessary elements
+    document.getElementById('myaddress2Div').style.display = 'block';
+  } else {
+    document.getElementById('myaddress2Div').style.display = 'none';
+  }
+}
+
 function withdrawStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  var address = web3.eth.accounts[0];
-  withdraw(document.getElementById('address3').value, address, document.getElementById('privatekey2').value, withdrawCallback);
+
+  var myaddress = '';
+  if(isGeth) {
+
+    myaddress = document.getElementById('myaddress2').value;
+  } else {
+
+    myaddress = web3.eth.accounts[0];
+  }
+
+  withdraw(document.getElementById('address3').value, myaddress, document.getElementById('privatekey2').value, withdrawCallback);
 }
 
 function withdrawStepStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  var address = web3.eth.accounts[0];
-  withdrawStep(document.getElementById('address3').value, address, withdrawStepCallback);
+
+  var myaddress = '';
+  if(isGeth) {
+
+    myaddress = document.getElementById('myaddress2').value;
+  } else {
+
+    myaddress = web3.eth.accounts[0];
+  }
+
+  withdrawStep(document.getElementById('address3').value, myaddress, withdrawStepCallback);
 }
 
 function withdrawFinalStart() {
   document.getElementById('withdrawLabel').innerHTML = 'Pending';
-  var address = web3.eth.accounts[0];
-  withdrawFinal(document.getElementById('address3').value, address, withdrawFinalCallback);
+
+  var myaddress = '';
+  if(isGeth) {
+
+    myaddress = document.getElementById('myaddress2').value;
+  } else {
+
+    myaddress = web3.eth.accounts[0];
+  }
+
+  withdrawFinal(document.getElementById('address3').value, myaddress, withdrawFinalCallback);
 }
 
 function withdrawCallback(data) {
@@ -70,7 +121,8 @@ function withdrawFinalCallback(data) {
 </script>  
 
 
-<body">	
+<body body onload="init();">
+	
 	  <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -122,6 +174,21 @@ function withdrawFinalCallback(data) {
       </div>
     </div>
 
+    <div class="panel panel-default" id="myaddress2Div">
+      <div class="panel-heading">
+        <h3 class="panel-title">My Address</h3>
+      </div>
+      
+      <div class="panel-body">
+        <p>Enter your Ethereum address.</p>
+		    <form>
+				    <div class="input-group">
+              <input type="text" class="form-control" style="width: 911px !important;" name="myaddress2" id="myaddress2">
+            </div>
+		    </form>
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Private Key</h3>
@@ -158,6 +225,7 @@ function withdrawFinalCallback(data) {
   <!--main content end-->
 
   <!-- js placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="js/web3.js"></script>
   <script type="text/javascript" src="js/jsbn.js"></script>
   <script type="text/javascript" src="js/signer.js"></script>
   <script type="text/javascript" src="js/laundromat.js"></script>
